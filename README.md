@@ -24,6 +24,7 @@ This project is designed to make scientific data easier to compare across studie
 |-- sql/
 |   |-- schema.sql
 |   |-- seed_example.sql
+|   |-- seed_synthetic_large.sql
 |   `-- queries/
 |       |-- cross_experiment_summary.sql
 |       |-- sample_lineage.sql
