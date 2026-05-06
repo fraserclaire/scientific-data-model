@@ -1,6 +1,6 @@
 # Scientific Data Model
 
-Relational PostgreSQL model for structuring experimental metadata, sequencing outputs, and downstream analysis results across experiments.
+Tool to design a relational schema and implement SQL queries to better structure experimental metadata, sequencing outputs, and analysis results for cross-experiment analysis.
 
 ## Purpose
 
@@ -17,17 +17,18 @@ This project is designed to make scientific data easier to compare across studie
 
 ```text
 .
-├── README.md
-├── docs/
-│   └── roadmap.md
-├── sql/
-│   ├── schema.sql
-│   ├── seed_example.sql
-│   └── queries/
-│       ├── cross_experiment_summary.sql
-│       ├── sample_lineage.sql
-│       └── sequencing_qc.sql
-└── .gitignore
+|-- README.md
+|-- LICENSE
+|-- docs/
+|   `-- roadmap.md
+|-- sql/
+|   |-- schema.sql
+|   |-- seed_example.sql
+|   `-- queries/
+|       |-- cross_experiment_summary.sql
+|       |-- sample_lineage.sql
+|       `-- sequencing_qc.sql
+`-- .gitignore
 ```
 
 ## Quick Start
@@ -57,3 +58,7 @@ psql scientific_data_model -f sql/queries/cross_experiment_summary.sql
 ## Status
 
 In progress. The first milestone is a normalized schema with enough seed data and queries to validate cross-experiment analysis patterns.
+
+## License
+
+MIT License.
