@@ -20,6 +20,7 @@ This project is designed to make scientific data easier to compare across studie
 |-- README.md
 |-- LICENSE
 |-- docs/
+|   |-- erd.md
 |   `-- roadmap.md
 |-- sql/
 |   |-- schema.sql
@@ -99,9 +100,14 @@ sudo -u postgres psql scientific_data_model -f sql/seed_synthetic_large.sql
 - Files are first-class records with checksums, storage locations, formats, and provenance.
 - Analysis runs capture workflow identity, version, parameters, inputs, outputs, and metrics.
 
+## Documentation
+
+- [Entity relationship diagram](docs/erd.md)
+- [Roadmap](docs/roadmap.md)
+
 ## Status
 
-In progress. The first milestone is a normalized schema with enough seed data and queries to validate cross-experiment analysis patterns.
+Initial PostgreSQL schema, larger synthetic seed data, and example cross-experiment queries are implemented. The schema and example queries have been tested end to end against a local PostgreSQL database.
 
 ## License
 
