@@ -33,6 +33,12 @@ This project is designed to make scientific data easier to compare across studie
 
 ## Quick Start
 
+Requirements:
+
+- PostgreSQL server
+- PostgreSQL command-line tools: `psql` and `createdb`
+- A database role with permission to create databases and tables
+
 Create a PostgreSQL database and load the schema:
 
 ```bash
@@ -41,10 +47,47 @@ psql scientific_data_model -f sql/schema.sql
 psql scientific_data_model -f sql/seed_example.sql
 ```
 
+For a larger synthetic dataset with multiple studies, experiments, samples, sequencing runs, and result metrics, load:
+
+```bash
+psql scientific_data_model -f sql/seed_synthetic_large.sql
+```
+
 Run an example query:
 
 ```bash
 psql scientific_data_model -f sql/queries/cross_experiment_summary.sql
+```
+
+## WSL/PostgreSQL Notes
+
+If `createdb` or `psql` is missing on Ubuntu/WSL, install the PostgreSQL client tools:
+
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-client postgresql-client-common
+```
+
+Start PostgreSQL:
+
+```bash
+sudo service postgresql start
+```
+
+If PostgreSQL reports that your Linux user role does not exist, run commands as the default `postgres` role:
+
+```bash
+sudo -u postgres createdb scientific_data_model
+sudo -u postgres psql scientific_data_model -f sql/schema.sql
+```
+
+If the demo database already exists and you want a clean reload:
+
+```bash
+sudo -u postgres dropdb --if-exists scientific_data_model
+sudo -u postgres createdb scientific_data_model
+sudo -u postgres psql scientific_data_model -f sql/schema.sql
+sudo -u postgres psql scientific_data_model -f sql/seed_synthetic_large.sql
 ```
 
 ## Model Highlights
