@@ -1,0 +1,19 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local database/runtime artifacts
+*.dump
+*.backup
+*.log
+
+# Environment/secrets
+.env
+.env.*
+!.env.example
+
+# Generated exports
+exports/
+reports/
