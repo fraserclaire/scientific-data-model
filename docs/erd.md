@@ -1,6 +1,6 @@
 # Entity Relationship Diagram
 
-This diagram shows the main relationships in the scientific data model. It reflects the foreign-key relationships defined in `sql/schema.sql` and focuses on table relationships and key entities rather than every column in the schema.
+The model separates biological entities (subjects, samples, conditions), sequencing artifacts (libraries, runs, files), and computational provenance (workflows, analysis runs, outputs) to support reproducible cross-study analysis and scalable metadata integration.
 
 ```mermaid
 erDiagram

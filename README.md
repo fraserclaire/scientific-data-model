@@ -1,19 +1,24 @@
 # Scientific Data Model
 
-Lightweight PostgreSQL data model for organizing experimental metadata, sequencing outputs, and analysis results so they can be queried consistently across studies and experiments.
+Lightweight PostgreSQL data model for organizing experimental metadata, sequencing outputs, and downstream analysis results into a consistent, queryable structure across studies and experiments.
 
 ## Purpose
 
 This project demonstrates how scientific metadata and sequencing analysis outputs can be structured in a relational database for reproducible, SQL-based analysis. It models the relationships between studies, experiments, samples, sequencing libraries, sequencing runs, analysis workflows, files, and result metrics.
 
-The goal is not to replace a full LIMS or scientific data management platform. Instead, this repository provides a focused, inspectable schema that shows how experimental context and derived results can be connected through stable identifiers for cross-experiment analysis.
+The goal is not to replace a full LIMS or scientific data management platform. Instead, this repository provides a focused relational schema demonstrating how experimental context, sequencing outputs, and downstream analytical results can be connected through stable identifiers for reproducible cross-experiment analysis.
 
 ## Current Scope
 
-- Track experiments, studies, protocols, samples, biological material, and experimental conditions.
-- Store sequencing runs, libraries, files, quality metrics, and genome/reference metadata.
-- Capture analysis workflows, software versions, parameters, result tables, and result-level metrics.
-- Provide example SQL queries for cross-experiment comparison and reproducible reporting.
+The current schema supports:
+
+- Study and experiment organization
+- Biological subject and sample metadata
+- Experimental conditions and protocol tracking
+- Sequencing library and run provenance
+- File-level metadata and checksum tracking
+- Analysis workflow versioning and parameter capture
+- Cross-experiment SQL queries and validation checks
 
 ## Repository Layout
 
@@ -129,6 +134,18 @@ WHERE datname = 'scientific_data_model'
 - Analysis runs capture workflow identity, version, parameters, inputs, outputs, and metrics.
 - Validation queries flag missing metadata, incomplete sequencing QC, incomplete analysis provenance, and unexpected demo row counts.
 
+## High-Level Entity Relationships
+
+```mermaid
+erDiagram
+    STUDIES ||--o{ EXPERIMENTS : contains
+    EXPERIMENTS ||--o{ EXPERIMENT_SAMPLES : includes
+    SAMPLES ||--o{ SEQUENCING_LIBRARIES : prepared_as
+    SEQUENCING_LIBRARIES ||--o{ LIBRARY_RUN_METRICS : measured_in
+    ANALYSIS_RUNS ||--o{ RESULT_METRICS : reports
+```
+- [Complete Entity Relationship Diagram](docs/erd.md)
+
 ## Comparison To Existing Approaches
 
 This project sits between ad hoc metadata files and full scientific data management systems:
@@ -140,9 +157,12 @@ This project sits between ad hoc metadata files and full scientific data managem
 
 The intended use case is a lightweight scientific data engineering prototype: transparent enough to inspect in GitHub, structured enough to support cross-experiment queries, and small enough to adapt for new experimental metadata patterns.
 
-## Documentation
+## Example Questions Supported By The Schema
 
-- [Entity relationship diagram](docs/erd.md)
+- Which RNA-seq libraries across all studies failed sequencing QC thresholds?
+- Which samples were processed with a specific protocol version?
+- Which analysis workflow and reference genome generated a given result file?
+- Which experiments contain replicate samples for the same condition?
 
 ## Status
 
