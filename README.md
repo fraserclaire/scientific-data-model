@@ -1,10 +1,12 @@
 # Scientific Data Model
 
-Tool to design a relational schema and implement SQL queries to better structure experimental metadata, sequencing outputs, and analysis results for cross-experiment analysis.
+Lightweight PostgreSQL data model for organizing experimental metadata, sequencing outputs, and analysis results so they can be queried consistently across studies and experiments.
 
 ## Purpose
 
-This project is designed to make scientific data easier to compare across studies, assays, samples, sequencing runs, and analysis pipelines. The schema keeps raw experimental context, sequencing outputs, and derived results connected through stable identifiers so cross-experiment analysis can be performed with SQL.
+This project demonstrates how scientific metadata and sequencing analysis outputs can be structured in a relational database for reproducible, SQL-based analysis. It models the relationships between studies, experiments, samples, sequencing libraries, sequencing runs, analysis workflows, files, and result metrics.
+
+The goal is not to replace a full LIMS or scientific data management platform. Instead, this repository provides a focused, inspectable schema that shows how experimental context and derived results can be connected through stable identifiers for cross-experiment analysis.
 
 ## Current Scope
 
@@ -99,6 +101,17 @@ sudo -u postgres psql scientific_data_model -f sql/seed_synthetic_large.sql
 - Sequencing libraries and runs are modeled separately so one library can be sequenced more than once.
 - Files are first-class records with checksums, storage locations, formats, and provenance.
 - Analysis runs capture workflow identity, version, parameters, inputs, outputs, and metrics.
+
+## Comparison To Existing Approaches
+
+This project sits between ad hoc metadata files and full scientific data management systems:
+
+- Compared with spreadsheets or CSV metadata sheets, the PostgreSQL schema provides stronger consistency, reusable joins, and clearer relationships between samples, sequencing runs, and analysis outputs.
+- Compared with standards such as ISA-Tab or ISA-JSON, this project is less focused on metadata exchange and more focused on direct SQL querying and relational design.
+- Compared with platforms such as LabKey Server or openBIS, this project is much smaller and does not include a user interface, permissions, audit trails, or workflow automation.
+- Compared with analysis containers such as Bioconductor `MultiAssayExperiment`, this project is a persistent relational backend rather than an in-memory analysis object.
+
+The intended use case is a lightweight scientific data engineering prototype: transparent enough to inspect in GitHub, structured enough to support cross-experiment queries, and small enough to adapt for new experimental metadata patterns.
 
 ## Documentation
 
