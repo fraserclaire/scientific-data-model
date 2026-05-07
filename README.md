@@ -110,6 +110,17 @@ sudo -u postgres psql scientific_data_model -f sql/schema.sql
 sudo -u postgres psql scientific_data_model -f sql/seed_synthetic_large.sql
 ```
 
+If `dropdb` reports that the database is being accessed by other users, terminate existing sessions from the maintenance database and rerun the clean reload commands:
+
+```bash
+sudo -u postgres psql -d postgres -c "
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'scientific_data_model'
+  AND pid <> pg_backend_pid();
+"
+```
+
 ## Model Highlights
 
 - Experiments are grouped under studies.
