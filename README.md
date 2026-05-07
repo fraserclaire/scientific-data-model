@@ -28,10 +28,15 @@ The goal is not to replace a full LIMS or scientific data management platform. I
 |   |-- schema.sql
 |   |-- seed_example.sql
 |   |-- seed_synthetic_large.sql
-|   `-- queries/
-|       |-- cross_experiment_summary.sql
-|       |-- sample_lineage.sql
-|       `-- sequencing_qc.sql
+|   |-- queries/
+|   |   |-- cross_experiment_summary.sql
+|   |   |-- sample_lineage.sql
+|   |   `-- sequencing_qc.sql
+|   `-- validation/
+|       |-- analysis_provenance_checks.sql
+|       |-- expected_demo_counts.sql
+|       |-- sample_metadata_checks.sql
+|       `-- sequencing_qc_checks.sql
 `-- .gitignore
 ```
 
@@ -62,6 +67,17 @@ Run an example query:
 ```bash
 psql scientific_data_model -f sql/queries/cross_experiment_summary.sql
 ```
+
+Run validation checks:
+
+```bash
+psql scientific_data_model -f sql/validation/sample_metadata_checks.sql
+psql scientific_data_model -f sql/validation/sequencing_qc_checks.sql
+psql scientific_data_model -f sql/validation/analysis_provenance_checks.sql
+psql scientific_data_model -f sql/validation/expected_demo_counts.sql
+```
+
+Validation queries return rows when a check finds records that need attention. Empty result sets mean no issues were found for that check.
 
 ## WSL/PostgreSQL Notes
 
@@ -101,6 +117,7 @@ sudo -u postgres psql scientific_data_model -f sql/seed_synthetic_large.sql
 - Sequencing libraries and runs are modeled separately so one library can be sequenced more than once.
 - Files are first-class records with checksums, storage locations, formats, and provenance.
 - Analysis runs capture workflow identity, version, parameters, inputs, outputs, and metrics.
+- Validation queries flag missing metadata, incomplete sequencing QC, incomplete analysis provenance, and unexpected demo row counts.
 
 ## Comparison To Existing Approaches
 
