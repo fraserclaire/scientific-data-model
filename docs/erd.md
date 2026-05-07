@@ -1,20 +1,20 @@
 # Entity Relationship Diagram
 
-This diagram shows the main relationships in the scientific data model. It focuses on table relationships and key entities rather than every column in the schema.
+This diagram shows the main relationships in the scientific data model. It reflects the foreign-key relationships defined in `sql/schema.sql` and focuses on table relationships and key entities rather than every column in the schema.
 
 ```mermaid
 erDiagram
     STUDIES ||--o{ EXPERIMENTS : contains
     EXPERIMENTS ||--o{ EXPERIMENT_SAMPLES : includes
     SAMPLES ||--o{ EXPERIMENT_SAMPLES : participates_in
-    PROTOCOLS ||--o{ EXPERIMENT_SAMPLES : applied_to
+    PROTOCOLS |o--o{ EXPERIMENT_SAMPLES : applied_to
 
-    SUBJECTS ||--o{ SAMPLES : provides
+    SUBJECTS |o--o{ SAMPLES : provides
     SAMPLES ||--o{ SAMPLE_CONDITIONS : has
     CONDITIONS ||--o{ SAMPLE_CONDITIONS : describes
 
     SAMPLES ||--o{ SEQUENCING_LIBRARIES : prepared_as
-    PROTOCOLS ||--o{ SEQUENCING_LIBRARIES : prepares
+    PROTOCOLS |o--o{ SEQUENCING_LIBRARIES : prepares
     SEQUENCING_LIBRARIES ||--o{ LIBRARY_RUN_METRICS : measured_in
     SEQUENCING_RUNS ||--o{ LIBRARY_RUN_METRICS : generates
 
@@ -22,8 +22,8 @@ erDiagram
     DATA_FILES ||--o{ LIBRARY_FILES : stores
 
     ANALYSIS_WORKFLOWS ||--o{ ANALYSIS_RUNS : executes
-    EXPERIMENTS ||--o{ ANALYSIS_RUNS : analyzed_by
-    REFERENCE_GENOMES ||--o{ ANALYSIS_RUNS : uses
+    EXPERIMENTS |o--o{ ANALYSIS_RUNS : analyzed_by
+    REFERENCE_GENOMES |o--o{ ANALYSIS_RUNS : uses
 
     ANALYSIS_RUNS ||--o{ ANALYSIS_INPUTS : consumes
     DATA_FILES ||--o{ ANALYSIS_INPUTS : input_file
@@ -31,7 +31,7 @@ erDiagram
     DATA_FILES ||--o{ ANALYSIS_OUTPUTS : output_file
 
     ANALYSIS_RUNS ||--o{ RESULT_METRICS : reports
-    SAMPLES ||--o{ RESULT_METRICS : measured_for
+    SAMPLES |o--o{ RESULT_METRICS : measured_for
 
     STUDIES {
         bigint study_id PK
@@ -192,3 +192,4 @@ erDiagram
 - Samples may carry structured conditions such as treatment, dose, and batch.
 - Sequencing libraries belong to samples, while sequencing runs capture instrument-level execution.
 - Analysis runs connect experiments, workflows, reference genomes, input files, output files, and result metrics.
+- Optional relationships in the diagram correspond to nullable foreign keys in `sql/schema.sql`, such as optional subject links on samples and optional reference genome links on analysis runs.
