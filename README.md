@@ -22,8 +22,7 @@ The goal is not to replace a full LIMS or scientific data management platform. I
 |-- README.md
 |-- LICENSE
 |-- docs/
-|   |-- erd.md
-|   `-- roadmap.md
+|   `-- erd.md
 |-- sql/
 |   |-- schema.sql
 |   |-- seed_example.sql
@@ -144,11 +143,18 @@ The intended use case is a lightweight scientific data engineering prototype: tr
 ## Documentation
 
 - [Entity relationship diagram](docs/erd.md)
-- [Roadmap](docs/roadmap.md)
 
 ## Status
 
-Initial PostgreSQL schema, larger synthetic seed data, and example cross-experiment queries are implemented. The schema and example queries have been tested end to end against a local PostgreSQL database.
+Initial PostgreSQL schema, larger synthetic seed data, example queries, validation queries, and ERD documentation are implemented. The schema and example queries have been tested locally with PostgreSQL using the larger synthetic seed dataset.
+
+## Future Work
+
+- Add a simple reset script or Makefile target for loading the demo database.
+- Add SQL views for common sample, sequencing QC, and analysis result summaries.
+- Add additional provenance data for `data_files`, `analysis_inputs`, and `analysis_outputs`.
+- Add a small real public dataset seed, such as a subset of GEO/Bioconductor `airway`.
+- Add lightweight database tests for schema creation, expected row counts, and representative query outputs.
 
 ## License
 
